@@ -1,0 +1,112 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: "Georgia", serif;
+  font-size: 1.2em;
+  color: #f4f4f4;
+  overflow: hidden;
+}
+
+/* Background */
+body {
+  background: url("images/scene_background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Widget as tablet */
+.widget {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 211, 105, 0.4);
+  border-radius: 12px;
+  padding: 20px 30px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7),
+              0 0 12px rgba(255, 211, 105, 0.2);
+  animation: fadeIn 2s ease;
+}
+
+.widget h2 {
+  font-size: 1.8em;
+  color: #ffd369;
+  text-shadow: 0 0 8px #ffae42, 0 0 16px #ff8c00;
+  margin-bottom: 10px;
+}
+
+.widget p {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: #e0e0e0;
+  text-shadow: 0 0 6px #00ffff, 0 0 12px #00ced1;
+}
+
+.inscriptions {
+  font-size: 1.5em;
+  line-height: 1.8em;
+}
+
+.hidden { display: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button */
+button {
+  background: transparent;
+  border: 2px solid #ffd369;
+  border-radius: 6px;
+  padding: 8px 18px;
+  margin-top: 15px;
+  font-size: 1em;
+  color: #ffd369;
+  cursor: pointer;
+  text-shadow: 0 0 6px #ffae42, 0 0 12px #ff8c00;
+  transition: 0.3s;
+}
+button:hover {
+  background: rgba(255, 211, 105, 0.1);
+  transform: scale(1.05);
+}
+
+/* Rune puzzle */
+#runes {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.rune {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ffd369;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 2em;
+  color: #ffd369;
+  text-shadow: 0 0 6px #ffae42, 0 0 12px #ff8c00;
+  background: rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+.rune:hover { transform: scale(1.1); }
+.rune.active {
+  background: #ffd369;
+  color: #000;
+  text-shadow: none;
+}
+.rune.wrong {
+  border-color: #ff4444;
+  color: #ff4444;
+  text-shadow: 0 0 6px #ff0000;
+}
