@@ -40,6 +40,8 @@
     <br>
     <p>Click the runes in the correct order to activate the seal.</p>
 
+    <p id="rune-hint"></p>
+ 
     <div id="runes">
       <div class="rune" data-value="10">ᚠ</div>
       <div class="rune" data-value="20">ᚱ</div>
@@ -47,7 +49,18 @@
       <div class="rune" data-value="15">ᚨ</div>
     </div>
 
-    <p id="rune-feedback"></p>
+    <p id="rune-feedback">&nbsp;</p>
+  </div>
+
+  <!-- Teleport Widget -->
+  <div class="widget hidden" id="teleport">
+    <h2>✨ Teleport Activated!</h2>
+    <p>
+      The runes align and the seal ignites.  
+      A shimmering portal opens before you, humming with ancient power.  
+      It will transport you to the next scene.
+    </p>
+    <button onclick="window.location.href='#'">Proceed to Scene 41</button>
   </div>
 
   <script src="script.js"></script>

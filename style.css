@@ -110,3 +110,14 @@ button:hover {
   color: #ff4444;
   text-shadow: 0 0 6px #ff0000;
 }
+
+#rune-hint {
+  margin-top: 10px;
+  font-size: 1em;
+  color: #ffd369;
+  text-shadow: 0 0 6px #ffae42, 0 0 12px #ff8c00;
+}
+
+#rune-feedback {
+  margin-top: 10px;
+}
