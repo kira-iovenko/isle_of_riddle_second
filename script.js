@@ -3,7 +3,10 @@ function showWidget(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
-const correctOrder = [5, 10, 15, 20]; // correct order
+/* ------------------------------
+   Rune puzzle logic (unchanged)
+------------------------------ */
+const correctOrder = [5, 10, 15, 20];
 let playerOrder = [];
 let wrongAttempts = 0;
 
@@ -23,7 +26,6 @@ document.querySelectorAll('.rune').forEach(rune => {
     const val = parseInt(rune.dataset.value);
     const feedback = document.getElementById('rune-feedback');
 
-    // prevent double-clicking the same rune
     if (rune.classList.contains('active')) return;
 
     rune.classList.add('active');
@@ -33,7 +35,6 @@ document.querySelectorAll('.rune').forEach(rune => {
       if (JSON.stringify(playerOrder) === JSON.stringify(correctOrder)) {
         feedback.textContent = "✨ The seal ignites — teleport activated!";
         feedback.style.color = "#ffd369";
-        // show a hint after delay
         setTimeout(() => {
           showWidget('teleport');
         }, 1000);
@@ -42,11 +43,9 @@ document.querySelectorAll('.rune').forEach(rune => {
         feedback.textContent = "The runes flicker angrily... reset!";
         feedback.style.color = "#ff6961";
 
-        // reset
         playerOrder = [];
         document.querySelectorAll('.rune').forEach(r => r.classList.remove('active'));
 
-        // show a hint after delay
         setTimeout(() => {
           if (wrongAttempts === 1) setHint(hintsList[1]);
           if (wrongAttempts === 3) setHint(hintsList[2]);
@@ -60,5 +59,64 @@ document.querySelectorAll('.rune').forEach(rune => {
   });
 });
 
-// show the very first hint at start
 setHint(hintsList[0]);
+
+/* ------------------------------
+   Overlay hit-testing
+------------------------------ */
+const overlays = document.querySelectorAll(".overlay");
+const canvases = {};
+
+overlays.forEach(img => {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const helper = new Image();
+  helper.src = img.src;
+
+  helper.onload = () => {
+    canvas.width = helper.width;
+    canvas.height = helper.height;
+    ctx.drawImage(helper, 0, 0);
+    canvases[img.src] = { canvas, ctx, img };
+  };
+});
+
+function isPixelVisible(img, x, y) {
+  const data = canvases[img.src];
+  if (!data) return false;
+
+  const rect = img.getBoundingClientRect();
+  const scaleX = data.canvas.width / rect.width;
+  const scaleY = data.canvas.height / rect.height;
+
+  const px = Math.floor((x - rect.left) * scaleX);
+  const py = Math.floor((y - rect.top) * scaleY);
+
+  if (px < 0 || py < 0 || px >= data.canvas.width || py >= data.canvas.height) return false;
+
+  const alpha = data.ctx.getImageData(px, py, 1, 1).data[3];
+  return alpha > 0;
+}
+
+document.addEventListener("mousemove", e => {
+  overlays.forEach(img => img.classList.remove("glow"));
+
+  [...overlays].reverse().some(img => {
+    if (isPixelVisible(img, e.clientX, e.clientY)) {
+      img.classList.add("glow");
+      return true; // stop at first visible overlay
+    }
+    return false;
+  });
+});
+
+document.addEventListener("click", e => {
+  [...overlays].reverse().some(img => {
+    if (isPixelVisible(img, e.clientX, e.clientY)) {
+      const action = img.dataset.action;
+      if (action) showWidget(action);
+      return true;
+    }
+    return false;
+  });
+});

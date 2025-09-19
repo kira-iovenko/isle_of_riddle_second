@@ -10,8 +10,10 @@
     <!-- Layered background + overlays -->
     <div class="scene-layer">
       <img src="images/scene_background.jpg" alt="Background" class="bg">
+
       <!-- Overlays (interactive) -->
-      <img src="images/ruins.webp" alt="Ruins Overlay" class="ruins-glow">
+      <img src="images/ruins.webp" alt="Ruins" class="overlay" data-action="lore">
+      <img src="images/tablet.webp" alt="Tablet" class="overlay" data-action="riddle">
     </div>
 
     <!-- Intro Widget -->
@@ -47,16 +49,13 @@
       </p>
       <br>
       <p>Click the runes in the correct order to activate the seal.</p>
-
-      <p id="rune-hint"></p>
-  
+      <p id="rune-hint">&nbsp;</p>
       <div id="runes">
         <div class="rune" data-value="10">ᚠ</div>
         <div class="rune" data-value="20">ᚱ</div>
         <div class="rune" data-value="5">ᚢ</div>
         <div class="rune" data-value="15">ᚨ</div>
       </div>
-
       <p id="rune-feedback">&nbsp;</p>
     </div>
 
