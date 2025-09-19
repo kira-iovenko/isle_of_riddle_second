@@ -6,61 +6,70 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Intro Widget -->
-  <div class="widget" id="intro">
-    <h2>🌙 Isle of the Riddle Second</h2>
-    <p>
-      You step onto a moonlit beach. Ruins rise from the sand, whispering of forgotten ages.  
-      The torches flicker, and the stones seem etched with faint words waiting to be read.
-    </p>
-    <button onclick="showWidget('lore')">Touch the Runes</button>
-  </div>
-
-  <!-- Lore Widget -->
-  <div class="widget hidden" id="lore">
-    <h2>📜 The Forgotten Rulers</h2>
-    <p>
-      These ruins once belonged to kings and queens whose names have been lost to the tides.  
-      They left riddles carved into stone, a trial for those who would awaken their secrets.
-    </p>
-    <button onclick="showWidget('riddle')">Read the Tablet</button>
-  </div>
-
-  <!-- Runic Puzzle -->
-  <div class="widget hidden" id="riddle">
-    <h2>ᚱ Runic Puzzle</h2>
-    <p>The ancient tablet glows with runes. Inscriptions nearby read:</p>
-    <br>
-    <p class="inscriptions">
-        ᚠ + ᚠ + ᚠ + ᚠ = <strong>40</strong><br>
-        ᚠ + ᚠ + ᚢ + ᚨ = <strong>40</strong><br>
-        ᚠ + ᚢ + ᚢ + ᚱ = <strong>40</strong><br>
-        ᚱ + ᚢ + ᚨ = <strong>40</strong><br>
-    </p>
-    <br>
-    <p>Click the runes in the correct order to activate the seal.</p>
-
-    <p id="rune-hint"></p>
- 
-    <div id="runes">
-      <div class="rune" data-value="10">ᚠ</div>
-      <div class="rune" data-value="20">ᚱ</div>
-      <div class="rune" data-value="5">ᚢ</div>
-      <div class="rune" data-value="15">ᚨ</div>
+  <div id="scene">
+    <!-- Layered background + overlays -->
+    <div class="scene-layer">
+      <img src="images/scene_background.jpg" alt="Background" class="bg">
+      <!-- Overlays (interactive) -->
+      <img src="images/ruins.webp" alt="Ruins Overlay" class="ruins-glow">
     </div>
 
-    <p id="rune-feedback">&nbsp;</p>
-  </div>
+    <!-- Intro Widget -->
+    <div class="widget" id="intro">
+      <h2>🌙 Isle of the Riddle Second</h2>
+      <p>
+        You step onto a moonlit beach. Ruins rise from the sand, whispering of forgotten ages.  
+        The torches flicker, and the stones seem etched with faint words waiting to be read.
+      </p>
+      <button onclick="showWidget('lore')">Touch the Runes</button>
+    </div>
 
-  <!-- Teleport Widget -->
-  <div class="widget hidden" id="teleport">
-    <h2>✨ Teleport Activated!</h2>
-    <p>
-      The runes align and the seal ignites.  
-      A shimmering portal opens before you, humming with ancient power.  
-      It will transport you to the next scene.
-    </p>
-    <button onclick="window.location.href='https://summer.hackclub.com/s?scene=95'">Isle of the Riddle Third</button>
+    <!-- Lore Widget -->
+    <div class="widget hidden" id="lore">
+      <h2>📜 The Forgotten Rulers</h2>
+      <p>
+        These ruins once belonged to kings and queens whose names have been lost to the tides.  
+        They left riddles carved into stone, a trial for those who would awaken their secrets.
+      </p>
+      <button onclick="showWidget('riddle')">Read the Tablet</button>
+    </div>
+
+    <!-- Runic Puzzle -->
+    <div class="widget hidden" id="riddle">
+      <h2>ᚱ Runic Puzzle</h2>
+      <p>The ancient tablet glows with runes. Inscriptions nearby read:</p>
+      <br>
+      <p class="inscriptions">
+          ᚠ + ᚠ + ᚠ + ᚠ = <strong>40</strong><br>
+          ᚠ + ᚠ + ᚢ + ᚨ = <strong>40</strong><br>
+          ᚠ + ᚢ + ᚢ + ᚱ = <strong>40</strong><br>
+          ᚱ + ᚢ + ᚨ = <strong>40</strong><br>
+      </p>
+      <br>
+      <p>Click the runes in the correct order to activate the seal.</p>
+
+      <p id="rune-hint"></p>
+  
+      <div id="runes">
+        <div class="rune" data-value="10">ᚠ</div>
+        <div class="rune" data-value="20">ᚱ</div>
+        <div class="rune" data-value="5">ᚢ</div>
+        <div class="rune" data-value="15">ᚨ</div>
+      </div>
+
+      <p id="rune-feedback">&nbsp;</p>
+    </div>
+
+    <!-- Teleport Widget -->
+    <div class="widget hidden" id="teleport">
+      <h2>✨ Teleport Activated!</h2>
+      <p>
+        The runes align and the seal ignites.  
+        A shimmering portal opens before you, humming with ancient power.  
+        It will transport you to the next scene.
+      </p>
+      <button onclick="window.location.href='https://summer.hackclub.com/s?scene=95'">Isle of the Riddle Third</button>
+    </div>
   </div>
 
   <script src="script.js"></script>

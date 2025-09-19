@@ -10,18 +10,56 @@ body, html {
   overflow: hidden;
 }
 
-/* Background */
-body {
-  background: url("images/scene_background.jpg") no-repeat center center fixed;
-  background-size: cover;
+#scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  /* Center child widgets */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+/* Layer that holds both bg and overlays */
+.scene-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scene-layer img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* both bg and ruins scale identically */
+}
+
+/* Background sits under ruins */
+.bg { z-index: 0; }
+.ruins-glow {
+  z-index: 1;
+  transition: filter 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+/* Glow effect */
+.ruins-glow:hover {
+  filter: drop-shadow(0 0 12px #ffd369) drop-shadow(0 0 24px #ffd369);
+}
+.ruins-glow:active {
+  filter: drop-shadow(0 0 20px #ffae42) drop-shadow(0 0 40px #ff8c00);
+}
+
 /* Widget as tablet */
 .widget {
+  position: relative;
+  z-index: 2; /* widgets above overlays */
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid rgba(255, 211, 105, 0.4);
   border-radius: 12px;
