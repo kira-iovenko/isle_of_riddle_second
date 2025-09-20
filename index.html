@@ -23,7 +23,7 @@
         You step onto a moonlit beach. Ruins rise from the sand, whispering of forgotten ages.  
         The torches flicker, and the stones seem etched with faint words waiting to be read.
       </p>
-      <button onclick="showWidget('lore')">Touch the Runes</button>
+      <button onclick="closeWidget()">Start exploring</button>
     </div>
 
     <!-- Lore Widget -->
@@ -33,7 +33,7 @@
         These ruins once belonged to kings and queens whose names have been lost to the tides.  
         They left riddles carved into stone, a trial for those who would awaken their secrets.
       </p>
-      <button onclick="showWidget('riddle')">Read the Tablet</button>
+      <button onclick="closeWidget()">Continue exploring</button>
     </div>
 
     <!-- Runic Puzzle -->
@@ -70,6 +70,9 @@
       <button onclick="window.location.href='https://summer.hackclub.com/s?scene=95'">Isle of the Riddle Third</button>
     </div>
   </div>
+
+  <!-- Floating intro button -->
+  <button id="intro-btn" onclick="showWidget('intro')">📜 Intro</button>
 
   <script src="script.js"></script>
 </body>

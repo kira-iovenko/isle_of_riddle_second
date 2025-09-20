@@ -3,6 +3,10 @@ function showWidget(id) {
   document.getElementById(id).classList.remove('hidden');
 }
 
+function closeWidget() {
+  document.querySelectorAll('.widget').forEach(w => w.classList.add('hidden'));
+}
+
 /* ------------------------------
    Rune puzzle logic (unchanged)
 ------------------------------ */
@@ -100,10 +104,12 @@ function isPixelVisible(img, x, y) {
 
 document.addEventListener("mousemove", e => {
   overlays.forEach(img => img.classList.remove("glow"));
+  document.body.style.cursor = "default";
 
   [...overlays].reverse().some(img => {
     if (isPixelVisible(img, e.clientX, e.clientY)) {
       img.classList.add("glow");
+      document.body.style.cursor = "pointer";
       return true; // stop at first visible overlay
     }
     return false;
