@@ -1,10 +1,20 @@
 function showWidget(id) {
   document.querySelectorAll('.widget').forEach(w => w.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
+  const target = document.getElementById(id);
+  target.classList.remove('hidden');
+
+  // hide intro button if intro is active
+  if (id === 'intro') {
+    document.getElementById('intro-btn').style.display = 'none';
+  }
 }
 
 function closeWidget() {
   document.querySelectorAll('.widget').forEach(w => w.classList.add('hidden'));
+
+  // show intro button once intro is closed
+  const introBtn = document.getElementById('intro-btn');
+  introBtn.style.display = 'block';
 }
 
 /* ------------------------------
@@ -117,7 +127,14 @@ document.addEventListener("mousemove", e => {
 });
 
 document.addEventListener("click", e => {
-  [...overlays].reverse().some(img => {
+  // 1. If click happened inside a widget → ignore
+  if (e.target.closest(".widget")) return;
+
+  // 2. If click happened on a floating button (like Intro 📜) → ignore
+  if (e.target.closest("button")) return;
+
+  // 3. Try overlay hit-testing
+  let handled = [...overlays].reverse().some(img => {
     if (isPixelVisible(img, e.clientX, e.clientY)) {
       const action = img.dataset.action;
       if (action) showWidget(action);
@@ -125,4 +142,9 @@ document.addEventListener("click", e => {
     }
     return false;
   });
+
+  // 4. If not handled by overlays → close any open widget
+  if (!handled) {
+    closeWidget();
+  }
 });
