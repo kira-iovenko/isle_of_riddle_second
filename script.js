@@ -18,7 +18,7 @@ function closeWidget() {
 }
 
 /* ------------------------------
-   Rune puzzle logic (unchanged)
+   Rune puzzle logic
 ------------------------------ */
 const correctOrder = [5, 10, 15, 20];
 let playerOrder = [];

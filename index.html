@@ -13,6 +13,8 @@
 
       <!-- Overlays (interactive) -->
       <img src="images/ruins.webp" alt="Ruins" class="overlay" data-action="lore">
+      <img src="images/tomb.webp" alt="Tomb" class="overlay" data-action="tomb">
+      <img src="images/bush.webp" alt="Bush" class="overlay" data-action="bush">
       <img src="images/tablet.webp" alt="Tablet" class="overlay" data-action="riddle">
     </div>
 
@@ -34,6 +36,28 @@
         They left riddles carved into stone, a trial for those who would awaken their secrets.
       </p>
       <button onclick="closeWidget()">Continue exploring</button>
+    </div>
+
+    <!-- Bush Widget -->
+    <div class="widget hidden" id="bush">
+      <h2>🌿 Overgrown Bushes</h2>
+      <p>
+        The bushes are thick and tangled, their leaves shifting with the night breeze.  
+        Through the gaps you catch glimpses of weathered stone, as if something ancient lies hidden just behind.  
+        If you push them aside, you can see more clearly…
+      </p>
+      <button onclick="closeWidget()">Continue exploring</button>
+    </div>
+
+    <!-- Tomb Widget -->
+    <div class="widget hidden" id="tomb">
+      <h2>⚰️ The Forgotten Tomb</h2>
+      <p>
+        A forgotten tomb stands half-buried in sand, its top jutting above the bushes.  
+        The stone door is carved with patterns that seem to shimmer faintly in the moonlight.  
+        Though the entrance is still sealed, the air around it feels heavy, as if waiting for someone to disturb its silence.
+      </p>
+      <button onclick="closeWidget()">Step back</button>
     </div>
 
     <!-- Runic Puzzle -->
