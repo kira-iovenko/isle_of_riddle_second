@@ -1,3 +1,5 @@
+let sealUnlocked = false;
+
 function showWidget(id) {
   document.querySelectorAll('.widget').forEach(w => w.classList.add('hidden'));
   const target = document.getElementById(id);
@@ -6,6 +8,15 @@ function showWidget(id) {
   // hide intro button if intro is active
   if (id === 'intro') {
     document.getElementById('intro-btn').style.display = 'none';
+  }
+
+  // unlock seal once tomb has been opened at least once
+  if (id === 'tomb' && !sealUnlocked) {
+    sealUnlocked = true;
+    const sealImg = document.querySelector('.overlay[data-action="seal"]');
+    if (sealImg) {
+      sealImg.style.pointerEvents = 'auto'; // enable interaction
+    }
   }
 }
 
@@ -113,11 +124,22 @@ function isPixelVisible(img, x, y) {
 }
 
 document.addEventListener("mousemove", e => {
-  overlays.forEach(img => img.classList.remove("glow"));
+  overlays.forEach(img => {
+    img.classList.remove("glow");
+
+    // keep seal hidden unless unlocked and explicitly revealed
+    if (img.dataset.action === "seal" && sealUnlocked) {
+      img.style.opacity = 0;
+    }
+  });
+
   document.body.style.cursor = "default";
 
   [...overlays].reverse().some(img => {
     if (isPixelVisible(img, e.clientX, e.clientY)) {
+      if (img.dataset.action === "seal" && sealUnlocked) {
+        img.style.opacity = 1; // reveal only if unlocked
+      }
       img.classList.add("glow");
       document.body.style.cursor = "pointer";
       return true; // stop at first visible overlay

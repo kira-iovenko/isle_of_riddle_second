@@ -53,6 +53,11 @@ body, html {
 .overlay.glow {
   filter: drop-shadow(0 0 12px #ffd369) drop-shadow(0 0 24px #ffd369);
 }
+.overlay[data-action="seal"] {
+  opacity: 0;
+  pointer-events: none; /* seal is non-interactive initially */
+  transition: opacity 0.1s ease;
+}
 
 /* Widget as tablet */
 .widget {
