@@ -149,13 +149,16 @@ document.addEventListener("mousemove", e => {
 });
 
 document.addEventListener("click", e => {
-  // 1. If click happened inside a widget → ignore
+  // If click happened inside a widget → ignore
   if (e.target.closest(".widget")) return;
 
-  // 2. If click happened on a floating button (like Intro 📜) → ignore
+  // If click happened on a puzzle tile → ignore
+  if (e.target.closest(".tile")) return;
+
+  // If click happened on a floating button (like Intro 📜) → ignore
   if (e.target.closest("button")) return;
 
-  // 3. Try overlay hit-testing
+  // Try overlay hit-testing
   let handled = [...overlays].reverse().some(img => {
     if (isPixelVisible(img, e.clientX, e.clientY)) {
       const action = img.dataset.action;
@@ -165,8 +168,42 @@ document.addEventListener("click", e => {
     return false;
   });
 
-  // 4. If not handled by overlays → close any open widget
+  // If not handled by overlays → close any open widget
   if (!handled) {
     closeWidget();
   }
 });
+
+/* ------------------------------
+   Seal Puzzle (15-puzzle)
+------------------------------ */
+const size = 4; // 4x4 grid
+const puzzleBoard = document.getElementById("puzzle");
+let tiles = [];
+let isShuffling = false;
+
+// Create tiles
+function init() {
+  tiles = [];
+  puzzleBoard.innerHTML = "";
+  for (let row = 0; row < size; row++) {
+    for (let col = 0; col < size; col++) {
+      const index = row * size + col;
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+      tile.dataset.index = index;
+
+      if (index === size * size - 1) {
+        tile.classList.add("empty");
+      } else {
+        tile.style.backgroundPosition =
+          `${(col * 100) / (size - 1)}% ${(row * 100) / (size - 1)}%`;
+      }
+
+      puzzleBoard.appendChild(tile);
+      tiles.push(tile);
+    }
+  }
+}
+
+init();

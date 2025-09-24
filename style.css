@@ -178,3 +178,33 @@ button:hover {
 #rune-feedback {
   margin-top: 10px;
 }
+
+/* Seal puzzle */
+#puzzle {
+  width: 70%;
+  max-width: 70%;       /* follow widget width */
+  aspect-ratio: 1 / 1;   /* keep it square */
+  margin: 20px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 12px rgba(255, 211, 105, 0.4);
+}
+
+.tile {
+  background-image: url("images/puzzle.webp");
+  background-size: 400% 400%; /* scale image to board size */
+  cursor: pointer;
+}
+
+.tile.empty {
+  background: transparent;
+  cursor: default;
+}
+
+.tile.correct {
+  filter: drop-shadow(0 0 12px #ffd369) drop-shadow(0 0 24px #ffd369);
+}
+
