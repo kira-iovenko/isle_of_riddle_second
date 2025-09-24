@@ -206,4 +206,139 @@ function init() {
   }
 }
 
+// Shuffle tiles by making random valid moves
+function shuffle(maxAttempts = 1000) {
+  isShuffling = true;
+
+  let attempts = 0;
+
+  // Helper: check if ALL non-empty tiles are wrong
+  function allWrong() {
+    for (let i = 0; i < tiles.length; i++) {
+      const tile = tiles[i];
+      if (tile.classList.contains("empty")) continue;
+      if (parseInt(tile.dataset.index) === i) {
+        return false; // found a correct tile
+      }
+    }
+    return true;
+  }
+
+  // Helper: mark wrong vs colorful
+  function updateTileStates() {
+    for (let i = 0; i < tiles.length; i++) {
+      const tile = tiles[i];
+      if (tile.classList.contains("empty")) {
+        tile.classList.remove("wrong");
+        continue;
+      }
+      if (parseInt(tile.dataset.index) === i) {
+        tile.classList.remove("wrong");
+      } else {
+        tile.classList.add("wrong");
+      }
+    }
+  }
+
+  while (attempts++ < maxAttempts && !allWrong()) {
+    // Perform random valid move
+    const emptyTile = tiles.find(t => t.classList.contains("empty"));
+    const emptyIndex = Array.from(puzzleBoard.children).indexOf(emptyTile);
+    const emptyRow = Math.floor(emptyIndex / size);
+    const emptyCol = emptyIndex % size;
+
+    // Collect adjacent tiles
+    const neighbors = tiles.filter((tile, idx) => {
+      const row = Math.floor(idx / size);
+      const col = idx % size;
+      return (
+        (row === emptyRow && Math.abs(col - emptyCol) === 1) ||
+        (col === emptyCol && Math.abs(row - emptyRow) === 1)
+      );
+    });
+
+    // Pick a random neighbor and move it
+    const randomTile = neighbors[Math.floor(Math.random() * neighbors.length)];
+    moveTile(randomTile);
+  }
+
+  isShuffling = false;
+}
+
+// Swap tile with empty if adjacent
+function moveTile(tile) {
+  const emptyTile = tiles.find(t => t.classList.contains("empty"));
+  const emptyIndex = Array.from(puzzleBoard.children).indexOf(emptyTile);
+  const tileIndex = Array.from(puzzleBoard.children).indexOf(tile);
+
+  const emptyRow = Math.floor(emptyIndex / size);
+  const emptyCol = emptyIndex % size;
+  const tileRow = Math.floor(tileIndex / size);
+  const tileCol = tileIndex % size;
+
+  const isAdjacent =
+    (tileRow === emptyRow && Math.abs(tileCol - emptyCol) === 1) ||
+    (tileCol === emptyCol && Math.abs(tileRow - emptyRow) === 1);
+
+  if (isAdjacent) {
+    // Swap them in the DOM
+    const emptyClone = emptyTile.cloneNode(true);
+    const tileClone = tile.cloneNode(true);
+
+    puzzleBoard.replaceChild(tileClone, emptyTile);
+    puzzleBoard.replaceChild(emptyClone, tile);
+
+    // Re-hook event listener on the cloned tile
+    tileClone.addEventListener("click", () => moveTile(tileClone));
+
+    // Update tiles array
+    tiles = Array.from(puzzleBoard.children);
+
+    // Update correct tile highlighting
+    updateCorrectTiles();
+
+    // Check win after every move
+    if (!isShuffling && checkSolved()) {
+      setTimeout(() => alert("🧩 Puzzle Solved!"), 100);
+    }
+  }
+}
+
+// Highlight correct tiles
+function updateCorrectTiles() {
+  for (let i = 0; i < tiles.length; i++) {
+    const tile = tiles[i];
+    if (tile.classList.contains("empty")) {
+      tile.classList.remove("wrong");
+      continue;
+    }
+    if (parseInt(tile.dataset.index) === i) {
+      tile.classList.remove("wrong");
+    } else {
+      tile.classList.add("wrong");
+    }
+  }
+}
+
+// Check if puzzle is solved
+function checkSolved() {
+  for (let i = 0; i < tiles.length; i++) {
+    if (parseInt(tiles[i].dataset.index) !== i) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Add click events
+puzzleBoard.addEventListener("click", e => {
+  if (e.target.classList.contains("tile") &&
+      !e.target.classList.contains("empty")) {
+    moveTile(e.target);
+  }
+});
+
+// Initialize and shuffle on load
 init();
+shuffle();
+

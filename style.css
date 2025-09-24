@@ -204,6 +204,10 @@ button:hover {
   cursor: default;
 }
 
+.tile.wrong {
+  filter: grayscale(100%);
+}
+
 .tile.correct {
   filter: drop-shadow(0 0 12px #ffd369) drop-shadow(0 0 24px #ffd369);
 }
