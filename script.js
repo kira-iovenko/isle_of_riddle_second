@@ -15,6 +15,7 @@ function showWidget(id) {
     sealUnlocked = true;
     const sealImg = document.querySelector('.overlay[data-action="seal"]');
     if (sealImg) {
+      sealImg.classList.remove("hidden");   // reveal seal
       sealImg.style.pointerEvents = 'auto'; // enable interaction
     }
   }
@@ -225,22 +226,6 @@ function shuffle(maxAttempts = 1000) {
     return true;
   }
 
-  // Helper: mark wrong vs colorful
-  function updateTileStates() {
-    for (let i = 0; i < tiles.length; i++) {
-      const tile = tiles[i];
-      if (tile.classList.contains("empty")) {
-        tile.classList.remove("wrong");
-        continue;
-      }
-      if (parseInt(tile.dataset.index) === i) {
-        tile.classList.remove("wrong");
-      } else {
-        tile.classList.add("wrong");
-      }
-    }
-  }
-
   while (attempts++ < maxAttempts && !allWrong()) {
     // Perform random valid move
     const emptyTile = tiles.find(t => t.classList.contains("empty"));
@@ -365,22 +350,38 @@ document.getElementById("activate-seal-btn").addEventListener("click", () => {
     overlay.classList.add("glow");
     puzzleGrid.classList.add("fade-out");
 
-    // After animations → close widget + remove seal from tomb
+    // After animations → close widget + remove seal from tomb + show follow-up widget
     setTimeout(() => {
       closeWidget();
 
+      // Permanently remove seal overlay
       const sealOverlay = document.querySelector('.overlay[data-action="seal"]');
       if (sealOverlay) {
-        sealOverlay.style.display = "none";
+        sealOverlay.remove();
       }
 
-      // Reset puzzle tiles (optional: in case player opens it again somehow)
+      // Permanently remove tomb closed overlay
+      const tombClosed = document.querySelector('.overlay[data-action="tomb"]');
+      if (tombClosed) {
+        tombClosed.remove();
+      }
+
+      // Reveal tomb open overlay
+      const tombOpen = document.querySelector('.overlay[data-action="tomb-open"]');
+      if (tombOpen) {
+        tombOpen.classList.remove("hidden");
+      }
+
+      // Reset puzzle tiles (in case widget is ever reopened)
       puzzleGrid.classList.remove("fade-out");
+
+      // Show follow-up widget
+      showWidget("seal-followup");
     }, 1500);
   }
 });
 
 // Initialize and shuffle on load
 init();
-shuffle(1);
+shuffle();
 

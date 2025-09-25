@@ -14,7 +14,8 @@
       <!-- Overlays (interactive) -->
       <img src="images/ruins.webp" alt="Ruins" class="overlay" data-action="lore">
       <img src="images/tomb.webp" alt="Tomb" class="overlay" data-action="tomb">
-      <img src="images/seal.webp" alt="Seal" class="overlay" data-action="seal">
+      <img src="images/seal.webp" alt="Seal" class="overlay hidden" data-action="seal">
+      <img src="images/tomb_open.webp" alt="Tomb Open" class="overlay hidden" data-action="tomb-open">
       <img src="images/bush.webp" alt="Bush" class="overlay" data-action="bush">
       <img src="images/tablet.webp" alt="Tablet" class="overlay" data-action="riddle">
     </div>
@@ -111,6 +112,28 @@
       <!-- Buttons -->
       <button onclick="closeWidget()" id="seal-back-btn">Step back</button>
       <button id="activate-seal-btn" class="hidden">Activate Seal</button>
+    </div>
+
+    <!-- Seal Follow-up Widget -->
+    <div class="widget hidden" id="seal-followup">
+      <h2>⚡ The Seal is Broken</h2>
+      <p>
+        The carvings flare once, then crumble into dust.  
+        The heavy stone door groans and slides away, leaving the tomb entrance unblocked.  
+        You feel a rush of cold air from the darkness inside…
+      </p>
+      <button onclick="closeWidget()">Continue exploring</button>
+    </div>
+
+    <!-- Tomb Open Widget -->
+    <div class="widget hidden" id="tomb-open">
+      <h2>🏛️ The Open Tomb</h2>
+      <p>
+        The seal is gone, and the entrance stands wide open.  
+        Beyond the threshold lies darkness, whispering of hidden chambers below.  
+        Do you dare to step inside?
+      </p>
+      <button onclick="closeWidget()">Continue exploring</button>
     </div>
   </div>
 
