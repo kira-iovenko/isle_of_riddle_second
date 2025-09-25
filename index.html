@@ -102,9 +102,15 @@
         The carvings shift and rearrange themselves into a broken pattern.  
         It feels like the seal will only open if you restore its shape.
       </p>
-      <div id="puzzle"></div>
+      <!-- Puzzle container (holds grid + solved overlay) -->
+      <div id="puzzle-container">
+        <div id="puzzle"></div>
+        <div id="puzzle-overlay" class="hidden"></div>
+      </div>
       <p id="puzzle-status"></p>
-      <button onclick="closeWidget()">Step back</button>
+      <!-- Buttons -->
+      <button onclick="closeWidget()" id="seal-back-btn">Step back</button>
+      <button id="activate-seal-btn" class="hidden">Activate Seal</button>
     </div>
   </div>
 

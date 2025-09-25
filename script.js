@@ -181,6 +181,7 @@ const size = 4; // 4x4 grid
 const puzzleBoard = document.getElementById("puzzle");
 let tiles = [];
 let isShuffling = false;
+let puzzleSolved = false;
 
 // Create tiles
 function init() {
@@ -267,6 +268,7 @@ function shuffle(maxAttempts = 1000) {
 
 // Swap tile with empty if adjacent
 function moveTile(tile) {
+  if (puzzleSolved) return;
   const emptyTile = tiles.find(t => t.classList.contains("empty"));
   const emptyIndex = Array.from(puzzleBoard.children).indexOf(emptyTile);
   const tileIndex = Array.from(puzzleBoard.children).indexOf(tile);
@@ -299,7 +301,20 @@ function moveTile(tile) {
 
     // Check win after every move
     if (!isShuffling && checkSolved()) {
-      setTimeout(() => alert("🧩 Puzzle Solved!"), 100);
+      const status = document.getElementById("puzzle-status");
+      const activateBtn = document.getElementById("activate-seal-btn");
+      const backBtn = document.getElementById("seal-back-btn");
+      const overlay = document.getElementById("puzzle-overlay");
+
+      status.textContent = "✨ The seal is ready to be activated!";
+      status.style.color = "#ffd369";
+
+      // Hide Step Back, show Activate Seal
+      backBtn.classList.add("hidden");
+      activateBtn.classList.remove("hidden");
+
+      // Show solved seal overlay
+      overlay.classList.remove("hidden");
     }
   }
 }
@@ -327,18 +342,45 @@ function checkSolved() {
       return false;
     }
   }
+  puzzleSolved = true;
   return true;
 }
 
 // Add click events
 puzzleBoard.addEventListener("click", e => {
+  if (puzzleSolved) return;
   if (e.target.classList.contains("tile") &&
       !e.target.classList.contains("empty")) {
     moveTile(e.target);
   }
 });
 
+// Seal activation logic
+document.getElementById("activate-seal-btn").addEventListener("click", () => {
+  const overlay = document.getElementById("puzzle-overlay");
+  const puzzleGrid = document.getElementById("puzzle");
+
+  if (overlay && puzzleGrid) {
+    // Trigger both glow and fade-out at the same time
+    overlay.classList.add("glow");
+    puzzleGrid.classList.add("fade-out");
+
+    // After animations → close widget + remove seal from tomb
+    setTimeout(() => {
+      closeWidget();
+
+      const sealOverlay = document.querySelector('.overlay[data-action="seal"]');
+      if (sealOverlay) {
+        sealOverlay.style.display = "none";
+      }
+
+      // Reset puzzle tiles (optional: in case player opens it again somehow)
+      puzzleGrid.classList.remove("fade-out");
+    }, 1500);
+  }
+});
+
 // Initialize and shuffle on load
 init();
-shuffle();
+shuffle(1);
 
