@@ -7,20 +7,19 @@ body, html {
   font-family: "Georgia", serif;
   font-size: 1.2em;
   color: #f4f4f4;
-  overflow: hidden;
+  overflow-y: auto;   /* allow scrolling between sections */
 }
 
-#scene {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+.scene {
+  position: relative;   /* make buttons/overlays stick within this section */
+  width: 100%;
+  height: 100vh;        /* each scene fills full viewport */
   overflow: hidden;
 
-  /* Center child widgets */
+  /* Flexbox center widgets */
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
 /* Layer that holds both bg and overlays */
@@ -75,6 +74,7 @@ body, html {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7),
               0 0 12px rgba(255, 211, 105, 0.2);
   animation: fadeIn 2s ease;
+  margin: 0;
 }
 .widget h2 {
   font-size: 1.8em;
@@ -99,8 +99,8 @@ body, html {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Floating Intro Button */
-#intro-btn {
+/* Floating Intro Button (scoped to beach scene only) */
+#beach-scene #intro-btn {
   position: absolute;
   top: 15px;
   left: 15px;
@@ -116,7 +116,7 @@ body, html {
   text-shadow: 0 0 6px #ffae42, 0 0 12px #ff8c00;
   transition: 0.3s;
 }
-#intro-btn:hover {
+#beach-scene #intro-btn:hover {
   background: rgba(255, 211, 105, 0.1);
   transform: scale(1.05);
 }
@@ -190,7 +190,6 @@ button:hover {
   aspect-ratio: 1 / 1;   /* square */
   margin: 20px auto 0;
 }
-
 #puzzle {
   width: 100%;
   height: 100%;
@@ -201,12 +200,10 @@ button:hover {
   background: rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 12px rgba(255, 211, 105, 0.4);
 }
-
 #puzzle.fade-out {
   opacity: 0;
-  transition: opacity 0.8s ease; /* longer so it feels magical */
+  transition: opacity 0.8s ease;
 }
-
 #puzzle-overlay {
   position: absolute;
   top: 0;
@@ -214,10 +211,9 @@ button:hover {
   width: 100%;
   height: 100%;
   background: url("images/puzzle.webp") center/cover no-repeat;
-  pointer-events: none; /* don’t block clicks */
-  z-index: 2; /* above tiles */
+  pointer-events: none;
+  z-index: 2;
 }
-
 #puzzle-overlay.glow {
   filter: drop-shadow(0 0 20px #ffd369) drop-shadow(0 0 40px #ffae42);
   transition: filter 1.2s ease;
@@ -225,18 +221,13 @@ button:hover {
 
 .tile {
   background-image: url("images/puzzle.webp");
-  background-size: 400% 400%; /* scale image to board size */
+  background-size: 400% 400%;
   cursor: pointer;
 }
-
 .tile.empty {
   background: transparent;
   cursor: default;
 }
-
 .tile.wrong {
   filter: grayscale(100%);
 }
-
-
-

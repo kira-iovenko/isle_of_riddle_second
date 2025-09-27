@@ -383,5 +383,35 @@ document.getElementById("activate-seal-btn").addEventListener("click", () => {
 
 // Initialize and shuffle on load
 init();
-shuffle();
+shuffle(1);
+
+
+/* ------------------------------
+   Underground Cave
+------------------------------ */
+
+// Enter tomb → fade widget, scroll, then show cave
+document.getElementById("enter-tomb-btn").addEventListener("click", () => {
+  // Fade out widget
+  closeWidget();
+
+  // Reveal cave section
+  const caveSection = document.getElementById("cave-scene");
+  caveSection.classList.remove("hidden");
+
+  // Smooth scroll to cave
+  caveSection.scrollIntoView({ behavior: "smooth" });
+
+  // After scroll, open cave follow-up widget
+  showWidget("cave-followup");
+});
+
+// Scroll back to beach scene from cave entrance
+document.getElementById("climb-up-btn").addEventListener("click", () => {
+  closeWidget();
+  const beachScene = document.getElementById("beach-scene");
+  if (beachScene) {
+    beachScene.scrollIntoView({ behavior: "smooth" });
+  }
+});
 

@@ -6,12 +6,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="scene">
-    <!-- Layered background + overlays -->
-    <div class="scene-layer">
-      <img src="images/scene_background.jpg" alt="Background" class="bg">
 
-      <!-- Overlays (interactive) -->
+  <!-- ================= BEACH SCENE ================= -->
+  <section class="scene" id="beach-scene">
+    <div class="scene-layer">
+      <!-- Background + overlays -->
+      <img src="images/scene_background.jpg" alt="Background" class="bg">
       <img src="images/ruins.webp" alt="Ruins" class="overlay" data-action="lore">
       <img src="images/tomb.webp" alt="Tomb" class="overlay" data-action="tomb">
       <img src="images/seal.webp" alt="Seal" class="overlay hidden" data-action="seal">
@@ -20,7 +20,7 @@
       <img src="images/tablet.webp" alt="Tablet" class="overlay" data-action="riddle">
     </div>
 
-    <!-- Intro Widget -->
+    <!-- Widgets -->
     <div class="widget" id="intro">
       <h2>🌙 Isle of the Riddle Second</h2>
       <p>
@@ -30,7 +30,6 @@
       <button onclick="closeWidget()">Start exploring</button>
     </div>
 
-    <!-- Lore Widget -->
     <div class="widget hidden" id="lore">
       <h2>📜 The Forgotten Rulers</h2>
       <p>
@@ -40,7 +39,6 @@
       <button onclick="closeWidget()">Continue exploring</button>
     </div>
 
-    <!-- Bush Widget -->
     <div class="widget hidden" id="bush">
       <h2>🌿 Overgrown Bushes</h2>
       <p>
@@ -51,7 +49,6 @@
       <button onclick="closeWidget()">Continue exploring</button>
     </div>
 
-    <!-- Tomb Widget -->
     <div class="widget hidden" id="tomb">
       <h2>⚰️ The Forgotten Tomb</h2>
       <p>
@@ -62,7 +59,6 @@
       <button onclick="closeWidget()">Step back</button>
     </div>
 
-    <!-- Runic Puzzle -->
     <div class="widget hidden" id="riddle">
       <h2>ᚱ Runic Puzzle</h2>
       <p>The ancient tablet glows with runes. Inscriptions nearby read:</p>
@@ -85,7 +81,6 @@
       <p id="rune-feedback">&nbsp;</p>
     </div>
 
-    <!-- Teleport Widget -->
     <div class="widget hidden" id="teleport">
       <h2>✨ Teleport Activated!</h2>
       <p>
@@ -96,25 +91,22 @@
       <button onclick="window.location.href='https://summer.hackclub.com/s?scene=95'">Isle of the Riddle Third</button>
     </div>
 
-    <!-- Seal Puzzle Widget -->
     <div class="widget hidden" id="seal">
       <h2>🔮 The Seal Puzzle</h2>
       <p>
         The carvings shift and rearrange themselves into a broken pattern.  
         It feels like the seal will only open if you restore its shape.
       </p>
-      <!-- Puzzle container (holds grid + solved overlay) -->
+      <!-- Puzzle container -->
       <div id="puzzle-container">
         <div id="puzzle"></div>
         <div id="puzzle-overlay" class="hidden"></div>
       </div>
       <p id="puzzle-status"></p>
-      <!-- Buttons -->
       <button onclick="closeWidget()" id="seal-back-btn">Step back</button>
       <button id="activate-seal-btn" class="hidden">Activate Seal</button>
     </div>
 
-    <!-- Seal Follow-up Widget -->
     <div class="widget hidden" id="seal-followup">
       <h2>⚡ The Seal is Broken</h2>
       <p>
@@ -125,7 +117,6 @@
       <button onclick="closeWidget()">Continue exploring</button>
     </div>
 
-    <!-- Tomb Open Widget -->
     <div class="widget hidden" id="tomb-open">
       <h2>🏛️ The Open Tomb</h2>
       <p>
@@ -133,12 +124,90 @@
         Beyond the threshold lies darkness, whispering of hidden chambers below.  
         Do you dare to step inside?
       </p>
+      <button id="enter-tomb-btn">Enter the tomb</button>
+    </div>
+
+    <!-- Floating intro button -->
+    <button id="intro-btn" onclick="showWidget('intro')">📜 Intro</button>
+  </section>
+
+  <!-- ================= CAVE SCENE ================= -->
+  <section class="scene hidden" id="cave-scene">
+    <div class="scene-layer">
+      <!-- Background + overlays -->
+      <img src="images/cave_background.jpg" alt="Underground Cave" class="bg">
+      <img src="images/entrance.webp" class="overlay" data-action="entrance">
+      <img src="images/treasure_middle.webp" class="overlay" data-action="treasure-middle">
+      <img src="images/gold_statue.webp" class="overlay" data-action="gold-statue">
+      <img src="images/treasure_left.webp" class="overlay" data-action="treasure-left">
+      <img src="images/treasure_right.webp" class="overlay" data-action="treasure-right">
+    </div>
+
+    <!-- Widgets -->
+    <div class="widget hidden" id="cave-followup">
+      <h2>💎 The Hidden Chamber</h2>
+      <p>
+        You step down into the tomb's dark stairwell…  
+        At the bottom, the chamber opens up into piles of treasure, glittering in the torchlight.  
+        Something golden watches you from the shadows.
+      </p>
       <button onclick="closeWidget()">Continue exploring</button>
     </div>
-  </div>
 
-  <!-- Floating intro button -->
-  <button id="intro-btn" onclick="showWidget('intro')">📜 Intro</button>
+    <div class="widget hidden" id="entrance">
+      <h2>🚪 The Stairwell</h2>
+      <p>
+        The stone archway rises behind you, leading back up into the ruins above.  
+        If you climb the steps, you'll return to the moonlit beach.
+      </p>
+      <button id="climb-up-btn">Climb Up</button>
+    </div>
+
+    <div class="widget hidden" id="treasure-middle">
+      <h2>🏆 The Central Hoard</h2>
+      <p>
+        A massive pile of gold coins rises before the stairwell,  
+        as if guarding the path below.  
+        Gems glitter in the firelight, daring you to take them…  
+        but you can't shake the feeling they're being watched.
+      </p>
+      <button onclick="closeWidget()">Step back</button>
+    </div>
+
+    <div class="widget hidden" id="gold-statue">
+      <h2>👑 The Golden Guardian</h2>
+      <p>
+        Among the piles of treasure sits a golden statue of a very fancy pup.  
+        Crown on her head, fluffy fur — she looks way too pampered to be guarding anything.
+        Still, her golden eyes sparkle like she knows more than she's letting on. 🐕 
+        <br><br>
+        Some say her name is <em>Queenie</em>… but maybe that's just a legend. 😉
+      </p>
+      <button onclick="closeWidget()">Step back</button>
+    </div>
+
+    <div class="widget hidden" id="treasure-left">
+      <h2>💰 Treasure Pile</h2>
+      <p>
+        Chests burst open with coins and jewels,  
+        their contents spilling across the floor.  
+        An old sword sticks awkwardly out of the heap —  
+        a reminder that not everyone left this chamber alive.
+      </p>
+      <button onclick="closeWidget()">Step back</button>
+    </div>
+
+    <div class="widget hidden" id="treasure-right">
+      <h2>💎 Glittering Cache</h2>
+      <p>
+        Coins and jewels spill from battered chests,  
+        their colors reflecting against the cave wall.  
+        For a moment, the gems almost seem to pulse with light,  
+        like the hoard itself is alive.
+      </p>
+      <button onclick="closeWidget()">Step back</button>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
