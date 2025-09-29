@@ -61,9 +61,16 @@ document.querySelectorAll('.rune').forEach(rune => {
       if (JSON.stringify(playerOrder) === JSON.stringify(correctOrder)) {
         feedback.textContent = "✨ The seal ignites — teleport activated!";
         feedback.style.color = "#ffd369";
+
         setTimeout(() => {
-          showWidget('teleport');
-        }, 1000);
+          closeWidget();
+
+          // Reveal teleport overlay
+          const teleport = document.querySelector('.overlay[data-action="teleport"]');
+          if (teleport) {
+            teleport.classList.remove("hidden");
+          }
+        }, 1500);
       } else {
         wrongAttempts++;
         feedback.textContent = "The runes flicker angrily... reset!";
@@ -125,6 +132,15 @@ function isPixelVisible(img, x, y) {
 }
 
 document.addEventListener("mousemove", e => {
+  // Ignore hover if inside a widget, puzzle tile, or button
+  if (e.target.closest(".widget") ||
+      e.target.closest(".tile") ||
+      e.target.closest("button")) {
+    document.body.style.cursor = "default";
+    overlays.forEach(img => img.classList.remove("glow"));
+    return;
+  }
+  
   overlays.forEach(img => {
     img.classList.remove("glow");
 
@@ -383,14 +399,12 @@ document.getElementById("activate-seal-btn").addEventListener("click", () => {
 
 // Initialize and shuffle on load
 init();
-shuffle(1);
+shuffle();
 
 
 /* ------------------------------
    Underground Cave
 ------------------------------ */
-
-// Enter tomb → fade widget, scroll, then show cave
 document.getElementById("enter-tomb-btn").addEventListener("click", () => {
   // Fade out widget
   closeWidget();
