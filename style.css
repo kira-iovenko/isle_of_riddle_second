@@ -122,7 +122,8 @@ body, html {
 }
 
 /* Button */
-button {
+button,
+a.button-link {
   background: transparent;
   border: 2px solid #ffd369;
   border-radius: 6px;
@@ -133,11 +134,15 @@ button {
   cursor: pointer;
   text-shadow: 0 0 6px #ffae42, 0 0 12px #ff8c00;
   transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
 }
-button:hover {
+button:hover,
+a.button-link:hover {
   background: rgba(255, 211, 105, 0.1);
   transform: scale(1.05);
 }
+
 
 /* Rune puzzle */
 #runes {
